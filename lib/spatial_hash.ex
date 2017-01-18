@@ -21,7 +21,7 @@ defmodule SpatialHash do
     [ do_hash(a, dim) | hash(rest_a, rest_dim) ]
   end
 
-  defp do_hash(a, {min, max, step}) do
+  defp do_hash(a, {min, _, step}) do
     hash = (a - min) / step
     err = Float.ceil(hash) - hash
 
@@ -50,10 +50,10 @@ defmodule SpatialHash do
       ...>    { -90.082746, 29.950955},
       ...>    {-90.081453, 29.952280},
       ...>    {-90.079489, 29.949770}
-      ...>  ]},
-      ...>  SpatialHash.world_grid)
+      ...>  ]})
       [89917..89920, 119949..119952]
   """
+  def hash_range(shape), do: hash_range(shape, world_grid())
   def hash_range(%Envelope{} = env, [dim_x, dim_y]) do
     min_x_hash = do_hash(env.min_x, dim_x)
     max_x_hash = do_hash(env.max_x, dim_x)
