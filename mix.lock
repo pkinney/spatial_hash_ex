@@ -1,0 +1,2 @@
+%{"envelope": {:hex, :envelope, "0.2.0", "4426f9dfe9dc83f8787db9874c53e0ec2082820177d77b2c083102de5c7fc3d0", [:mix], [{:geo, "~> 1.0", [hex: :geo, optional: false]}]},
+  "geo": {:hex, :geo, "1.3.1", "a80aaaa341fa72337d718151c279877b74689141222af0e5fdd4071c615ec4be", [:mix], [{:ecto, "~> 2.1", [hex: :ecto, optional: true]}, {:poison, "~> 1.5 or ~> 2.0 or ~> 3.0", [hex: :poison, optional: true]}, {:postgrex, "~> 0.13", [hex: :postgrex, optional: true]}]}}
