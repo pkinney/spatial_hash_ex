@@ -14,8 +14,11 @@ defmodule SpatialHash do
       [3596, 443]
       iex> SpatialHash.hash([0.2, -80.2], [{-180, 180, 0.05}, {-90, 90, 0.1}])
       [3604, 98]
+      iex> SpatialHash.hash([0.2, -80.2])
+      [180200, 9800]
 
   """
+  def hash(point), do: hash(point, world_grid)
   def hash([], []), do: []
   def hash([a | rest_a], [dim | rest_dim]) do
     [ do_hash(a, dim) | hash(rest_a, rest_dim) ]
