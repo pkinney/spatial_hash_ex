@@ -18,7 +18,7 @@ end
 
 **[Full Documentation](https://hexdocs.pm/spatial_hash/SpatialHash.html)**
 
-The `Envelope` module provides a `hash` function that takes a single point on any dimension
+The `SpatialHash` module provides a `hash` function that takes a single point on any dimension
 as an array of coordinates and an array of gridding properties for each dimension.  Grid
 properties are specified as a tuple of coordinate min and max as well as a step value for
 the grid spacing.  Convenience function of `SpatialHash.world_grid()` is provided that
