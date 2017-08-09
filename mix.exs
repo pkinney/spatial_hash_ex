@@ -3,7 +3,7 @@ defmodule SpatialHash.Mixfile do
 
   def project do
     [app: :spatial_hash,
-     version: "0.1.2",
+     version: "0.1.3",
      elixir: "~> 1.4",
      description: description,
      package: package,
@@ -30,7 +30,7 @@ defmodule SpatialHash.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    [ {:envelope, "~> 0.2.0"},
+    [ {:envelope, "~> 0.4"},
       {:ex_doc, ">= 0.0.0", only: :dev}]
   end
 
