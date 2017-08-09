@@ -3,10 +3,10 @@ defmodule SpatialHash.Mixfile do
 
   def project do
     [app: :spatial_hash,
-     version: "0.1.3",
+     version: "0.1.4",
      elixir: "~> 1.4",
-     description: description,
-     package: package,
+     description: description(),
+     package: package(),
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      deps: deps()]

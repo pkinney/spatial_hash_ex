@@ -18,7 +18,7 @@ defmodule SpatialHash do
       [180200, 9800]
 
   """
-  def hash(point), do: hash(point, world_grid)
+  def hash(point), do: hash(point, world_grid())
   def hash([], []), do: []
   def hash([a | rest_a], [dim | rest_dim]) do
     [ do_hash(a, dim) | hash(rest_a, rest_dim) ]
