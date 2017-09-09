@@ -2,6 +2,18 @@ defmodule SpatialHash do
   @moduledoc """
   Documentation for SpatialHash.
   """
+  @type point :: list(number)
+  @type point_range :: list(%Range{})
+  @type grid_dim :: {number, number, number}
+  @type grid :: list(grid_dim)
+  @type geometry :: {number, number}
+                  | %{type: String.t, coordinates: list}
+                  | %Geo.Point{}
+                  | %Geo.MultiPoint{}
+                  | %Geo.LineString{}
+                  | %Geo.MultiLineString{}
+                  | %Geo.Polygon{}
+                  | %Geo.MultiPolygon{}
 
   @eps 0.000001
 
@@ -18,12 +30,14 @@ defmodule SpatialHash do
       [180200, 9800]
 
   """
+  @spec hash(point, grid) :: point
   def hash(point), do: hash(point, world_grid())
   def hash([], []), do: []
   def hash([a | rest_a], [dim | rest_dim]) do
-    [ do_hash(a, dim) | hash(rest_a, rest_dim) ]
+    [do_hash(a, dim) | hash(rest_a, rest_dim)]
   end
 
+  @spec do_hash(number, grid_dim) :: number
   defp do_hash(a, {min, _, step}) do
     hash = (a - min) / step
     err = Float.ceil(hash) - hash
@@ -55,7 +69,13 @@ defmodule SpatialHash do
       ...>    {-90.079489, 29.949770}
       ...>  ]})
       [89917..89920, 119949..119952]
+
+      iex> SpatialHash.hash_range(
+      ...>  %{type: "Point",
+      ...>    coordinates: { -90.082746, 29.950955}})
+      [89917..89917, 119950..119950]
   """
+  @spec hash_range(%Envelope{} | geometry, grid) :: point_range
   def hash_range(shape), do: hash_range(shape, world_grid())
   def hash_range(%Envelope{} = env, [dim_x, dim_y]) do
     min_x_hash = do_hash(env.min_x, dim_x)
@@ -67,6 +87,19 @@ defmodule SpatialHash do
   end
   def hash_range(%{coordinates: coords}, dims), do: hash_range(Envelope.from_geo(coords), dims)
 
+  @doc """
+  Convenience function for creating a grid for use with longitude/latitude grids.
+  You can specify a grid spacing, or it will default to `0.001`.
+
+  ## Examples
+
+      iex> SpatialHash.world_grid()
+      [{-180, 180, 0.001}, {-90, 90, 0.001}]
+
+      iex> SpatialHash.world_grid(0.03)
+      [{-180, 180, 0.03}, {-90, 90, 0.03}]
+  """
+  @spec world_grid(number) :: grid
   def world_grid(step \\ 0.001) do
     [{-180, 180, step}, {-90, 90, step}]
   end

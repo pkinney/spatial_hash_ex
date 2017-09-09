@@ -3,12 +3,15 @@ defmodule SpatialHash.Mixfile do
 
   def project do
     [app: :spatial_hash,
-     version: "0.1.4",
+     version: "0.1.5",
      elixir: "~> 1.4",
      description: description(),
      package: package(),
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
+     test_coverage: [tool: ExCoveralls],
+     preferred_cli_env: [coveralls: :test],
+     dialyzer: [plt_add_apps: [:poison, :mix]],
      deps: deps()]
   end
 
@@ -17,7 +20,7 @@ defmodule SpatialHash.Mixfile do
   # Type "mix help compile.app" for more information
   def application do
     # Specify extra applications you'll use from Erlang/Elixir
-    [extra_applications: [:logger]]
+    [extra_applications: [:logger, :envelope]]
   end
 
   # Dependencies can be Hex packages:
@@ -31,7 +34,10 @@ defmodule SpatialHash.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [ {:envelope, "~> 0.4"},
-      {:ex_doc, ">= 0.0.0", only: :dev}]
+      {:ex_doc, ">= 0.0.0", only: :dev},
+      {:excoveralls, "~> 0.4", only: :test},
+      {:credo, "~> 0.8", only: [:dev, :test], runtime: false},
+      {:dialyxir, "~> 0.4", only: [:dev], runtime: false}]
   end
 
   defp description do
