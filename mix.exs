@@ -34,7 +34,7 @@ defmodule SpatialHash.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [ {:envelope, "~> 1.2"},
-      {:ex_doc, ">= 0.0.0", only: :dev},
+      {:ex_doc, "~> 0.18", only: :dev},
       {:excoveralls, "~> 0.4", only: :test},
       {:credo, "~> 0.8", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 0.4", only: [:dev], runtime: false}]
