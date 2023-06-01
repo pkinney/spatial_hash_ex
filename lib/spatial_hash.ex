@@ -6,14 +6,15 @@ defmodule SpatialHash do
   @type point_range :: list(%Range{})
   @type grid_dim :: {number, number, number}
   @type grid :: list(grid_dim)
-  @type geometry :: {number, number}
-                  | %{type: String.t, coordinates: list}
-                  | %Geo.Point{}
-                  | %Geo.MultiPoint{}
-                  | %Geo.LineString{}
-                  | %Geo.MultiLineString{}
-                  | %Geo.Polygon{}
-                  | %Geo.MultiPolygon{}
+  @type geometry ::
+          {number, number}
+          | %{type: String.t(), coordinates: list}
+          | %Geo.Point{}
+          | %Geo.MultiPoint{}
+          | %Geo.LineString{}
+          | %Geo.MultiLineString{}
+          | %Geo.Polygon{}
+          | %Geo.MultiPolygon{}
 
   @eps 0.000001
 
@@ -33,6 +34,7 @@ defmodule SpatialHash do
   @spec hash(point, grid) :: point
   def hash(point), do: hash(point, world_grid())
   def hash([], []), do: []
+
   def hash([a | rest_a], [dim | rest_dim]) do
     [do_hash(a, dim) | hash(rest_a, rest_dim)]
   end
@@ -75,16 +77,18 @@ defmodule SpatialHash do
       ...>    coordinates: { -90.082746, 29.950955}})
       [89917..89917, 119950..119950]
   """
-  @spec hash_range(%Envelope{} | geometry, grid) :: point_range
+  @spec hash_range(Envelope.t() | geometry, grid) :: point_range
   def hash_range(shape), do: hash_range(shape, world_grid())
+
   def hash_range(%Envelope{} = env, [dim_x, dim_y]) do
     min_x_hash = do_hash(env.min_x, dim_x)
     max_x_hash = do_hash(env.max_x, dim_x)
     min_y_hash = do_hash(env.min_y, dim_y)
     max_y_hash = do_hash(env.max_y, dim_y)
 
-    [min_x_hash .. max_x_hash, min_y_hash .. max_y_hash]
+    [min_x_hash..max_x_hash, min_y_hash..max_y_hash]
   end
+
   def hash_range(%{coordinates: coords}, dims), do: hash_range(Envelope.from_geo(coords), dims)
 
   @doc """

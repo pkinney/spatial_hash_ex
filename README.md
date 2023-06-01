@@ -1,6 +1,6 @@
 # SpatialHash
 
-[![Build Status](https://travis-ci.org/pkinney/spatial_hash_ex.svg?branch=master)](https://travis-ci.org/pkinney/spatial_hash_ex)
+[![CI](https://github.com/pkinney/spatial_hash_ex/actions/workflows/ci.yaml/badge.svg)](https://github.com/pkinney/spatial_hash_ex/actions/workflows/ci.yaml)
 [![Hex.pm](https://img.shields.io/hexpm/v/spatial_hash.svg)](https://hex.pm/packages/spatial_hash)
 
 A library for calculating spatial hashes for points and geometries.

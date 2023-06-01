@@ -2,17 +2,20 @@ defmodule SpatialHash.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :spatial_hash,
-     version: "0.1.6",
-     elixir: "~> 1.4",
-     description: description(),
-     package: package(),
-     build_embedded: Mix.env == :prod,
-     start_permanent: Mix.env == :prod,
-     test_coverage: [tool: ExCoveralls],
-     preferred_cli_env: [coveralls: :test],
-     dialyzer: [plt_add_apps: [:poison, :mix]],
-     deps: deps()]
+    [
+      app: :spatial_hash,
+      version: "0.1.6",
+      elixir: "~> 1.4",
+      description: description(),
+      package: package(),
+      build_embedded: Mix.env() == :prod,
+      start_permanent: Mix.env() == :prod,
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [coveralls: :test],
+      dialyzer: [plt_add_apps: [:poison, :mix]],
+      deps: deps(),
+      aliases: aliases()
+    ]
   end
 
   # Configuration for the OTP application
@@ -33,11 +36,13 @@ defmodule SpatialHash.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    [ {:envelope, "~> 1.2"},
+    [
+      {:envelope, "~> 1.2"},
       {:ex_doc, "~> 0.18", only: :dev},
       {:excoveralls, "~> 0.4", only: :test},
-      {:credo, "~> 0.8", only: [:dev, :test], runtime: false},
-      {:dialyxir, "~> 0.4", only: [:dev], runtime: false}]
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+      {:dialyxir, "~> 1.3", only: [:dev], runtime: false}
+    ]
   end
 
   defp description do
@@ -51,7 +56,19 @@ defmodule SpatialHash.Mixfile do
       files: ["lib/spatial_hash.ex", "mix.exs", "README*"],
       maintainers: ["Powell Kinney"],
       licenses: ["MIT"],
-      links: %{ "GitHub" => "https://github.com/pkinney/spatial_hash_ex"}
+      links: %{"GitHub" => "https://github.com/pkinney/spatial_hash_ex"}
+    ]
+  end
+
+  defp aliases() do
+    [
+      validate: [
+        "clean",
+        "compile --warnings-as-errors",
+        "format --check-formatted",
+        "credo",
+        "dialyzer"
+      ]
     ]
   end
 end
